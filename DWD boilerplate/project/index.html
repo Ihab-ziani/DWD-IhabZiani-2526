@@ -1,0 +1,57 @@
+<!-- 
+=========================================
+BRONVERMELDING
+Bestand: index.html
+Bron: DeepSeek AI (chat.deepseek.com) (omdat Claude.AI hier niet werkte en bleef maar API Error: "400 This organization has been disabled." weergeven)
+Datum: mei 2026
+Aanpassingen: eigen API key toegevoegd, kleine styling aanpassingen
+=========================================
+-->
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyInstants Soundboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>🎵 MyInstants Soundboard</h1>
+            <p>Klik op een knop voor geluid - Zoek en voeg zelf meer toe!</p>
+        </header>
+
+        <!-- Zoekbalk (verplicht voor opdracht) -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Zoek extra geluiden op Freesound..." class="search-input">
+            <button id="searchBtn" class="search-btn">🔍 Zoeken</button>
+        </div>
+
+        <!-- VASTE KNOPPEN (15 stuks - jouw keuze) -->
+        <div class="fixed-section">
+            <h2>🎤 Mijn soundboard</h2>
+            <div id="fixedSoundboard" class="soundboard-grid"></div>
+        </div>
+
+        <!-- Zoekresultaten (van Freesound API) -->
+        <div class="search-section">
+            <h2>📦 Zoekresultaten (Freesound)</h2>
+            <div id="searchResults" class="soundboard-grid">
+                <div class="placeholder">✨ Zoek extra geluiden hierboven...</div>
+            </div>
+        </div>
+
+        <!-- Dashboard (opgeslagen favorieten) -->
+        <div class="dashboard-section">
+            <h2>📋 Mijn dashboard <span id="dashboardCount">(0)</span></h2>
+            <div id="dashboard" class="soundboard-grid">
+                <div class="placeholder">⭐ Klik op ⭐ bij zoekresultaten om knoppen toe te voegen</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
