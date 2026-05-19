@@ -1,0 +1,246 @@
+/* 
+Bron: DeepSeek AI (chat.deepseek.com)
+Soundboard-stijl exact zoals MyInstants / SoundButtonsWorld
+*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 24px;
+}
+
+header h1 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #aaa;
+}
+
+.search-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 50px;
+    background: #2a2a3e;
+    color: white;
+    border: 1px solid #4a90e2;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    border-color: #f1c40f;
+    outline: none;
+}
+
+.search-btn {
+    padding: 14px 28px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.1s ease;
+}
+
+.search-btn:hover {
+    background: #357abd;
+    transform: scale(1.02);
+}
+
+.fixed-section, .search-section, .dashboard-section {
+    background: rgba(255,255,255,0.05);
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-left: 4px solid #f1c40f;
+    padding-left: 15px;
+}
+
+.soundboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+/* ========== DE BUTTON - ECHTE MYINSTANTS LOOK! ========== */
+.sound-btn {
+    background: linear-gradient(135deg, #2c2c3e 0%, #1a1a2e 100%);
+    border: 2px solid #4a90e2;
+    border-radius: 20px;
+    padding: 18px 8px;
+    cursor: pointer;
+    font-family: inherit;
+    width: 100%;
+    color: white;
+    text-align: center;
+    box-shadow: 0 7px 0 #0a0a12;
+    transition: all 0.08s linear;
+}
+
+.sound-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 0 #0a0a12;
+    background: linear-gradient(135deg, #3a3a50 0%, #2a2a3e 100%);
+}
+
+.sound-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 3px 0 #0a0a12;
+}
+
+.sound-btn.active {
+    background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+    transform: translateY(4px);
+    box-shadow: 0 3px 0 #0a0a12;
+    border-color: #f1c40f;
+}
+
+.sound-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.sound-name {
+    font-weight: 600;
+    font-size: 0.8rem;
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.action-btn {
+    background: rgba(255,255,255,0.12);
+    border: none;
+    border-radius: 50px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: white;
+    width: 100%;
+    transition: all 0.1s ease;
+}
+
+.action-btn.add {
+    background: #f39c12;
+}
+
+.action-btn.add:hover {
+    background: #e67e22;
+    transform: scale(1.02);
+}
+
+.action-btn.remove {
+    background: #e74c3c;
+}
+
+.action-btn.remove:hover {
+    background: #c0392b;
+    transform: scale(1.02);
+}
+
+.volume-control {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-slider {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: #555;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #f1c40f;
+    cursor: pointer;
+    border: none;
+}
+
+.placeholder {
+    text-align: center;
+    color: #aaa;
+    padding: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    grid-column: 1 / -1;
+}
+
+.loading {
+    text-align: center;
+    color: #f1c40f;
+    padding: 20px;
+    grid-column: 1 / -1;
+}
+
+.sound-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .soundboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+    }
+    .sound-icon {
+        font-size: 2rem;
+    }
+    .sound-name {
+        font-size: 0.7rem;
+    }
+    .search-container {
+        flex-direction: column;
+    }
+    .search-btn {
+        width: 100%;
+    }
+}
