@@ -4,6 +4,7 @@ BRONVERMELDING
 Bestand: script.js
 Bron: DeepSeek AI (chat.deepseek.com) (omdat Claude.AI hier niet werkte en bleef maar API Error: "400 This organization has been disabled." weergeven)
 Datum: mei 2026
+Finale versie
 Aanpassingen: 
   - Eigen API key toegevoegd
   - Fallback voor waveform afbeeldingen
