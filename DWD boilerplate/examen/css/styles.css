@@ -1,0 +1,454 @@
+/* =============================================================
+   Recipe Finder – Stylesheet
+   Structuur:
+   1. Custom properties (kleurpalet, typografie)
+   2. Reset & basis
+   3. Header
+   4. Zoekbalk
+   5. Status-/foutbericht
+   6. Receptkaarten grid
+   7. Receptkaart
+   8. Hartje (favoriet)
+   9. Modal overlay & kaart
+   10. Modal inhoud (ingrediënten, instructies)
+   11. Responsive (max-width breakpoints)
+   ============================================================= */
+ 
+/* ----- 1. Custom properties ----- */
+:root {
+  /* Palet: warm ivoor + diep leisteen + kruiden-groen accent */
+  --kleur-achtergrond:  #f7f4ef;
+  --kleur-oppervlak:    #ffffff;
+  --kleur-rand:         #e2ddd6;
+  --kleur-tekst:        #1e1e1e;
+  --kleur-subtekst:     #6b6560;
+  --kleur-accent:       #3d7a5e;       /* kruiden-groen */
+  --kleur-accent-hover: #2e5f47;
+  --kleur-favoriet:     #e03e3e;       /* rood hart */
+  --kleur-header-bg:    #1e2e28;      /* donker dennengroen */
+  --kleur-header-tekst: #f7f4ef;
+ 
+  /* Typografie */
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body:    system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+ 
+  /* Afmetingen */
+  --radius:   10px;
+  --schaduw:  0 2px 12px rgba(0, 0, 0, 0.08);
+  --max-breedte: 1200px;
+}
+ 
+/* ----- 2. Reset & basis ----- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+body {
+  font-family: var(--font-body);
+  background-color: var(--kleur-achtergrond);
+  color: var(--kleur-tekst);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+ 
+img {
+  display: block;
+  max-width: 100%;
+}
+ 
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+ 
+/* ----- 3. Header ----- */
+.site-header {
+  background-color: var(--kleur-header-bg);
+  color: var(--kleur-header-tekst);
+  padding: 2rem 1.5rem 1.75rem;
+}
+ 
+.header-inner {
+  max-width: var(--max-breedte);
+  margin: 0 auto;
+}
+ 
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+ 
+.tagline {
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+ 
+/* ----- 4. Zoekbalk ----- */
+.main-content {
+  max-width: var(--max-breedte);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+ 
+.search-section {
+  margin-bottom: 1.75rem;
+}
+ 
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+ 
+.zoek-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--kleur-rand);
+  border-radius: var(--radius);
+  background: var(--kleur-oppervlak);
+  color: var(--kleur-tekst);
+  transition: border-color 0.2s;
+  outline: none;
+}
+ 
+.zoek-input:focus {
+  border-color: var(--kleur-accent);
+}
+ 
+.zoek-knop {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--kleur-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  transition: background-color 0.2s, transform 0.1s;
+}
+ 
+.zoek-knop:hover {
+  background-color: var(--kleur-accent-hover);
+}
+ 
+.zoek-knop:active {
+  transform: scale(0.97);
+}
+ 
+/* ----- 5. Status- / foutbericht ----- */
+.status-bericht {
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  background-color: #fff3cd;
+  border: 1px solid #f0c040;
+  color: #5a4200;
+}
+ 
+.status-bericht.fout {
+  background-color: #fde8e8;
+  border-color: #f5a0a0;
+  color: #7a1c1c;
+}
+ 
+.verborgen {
+  display: none !important;
+}
+ 
+/* ----- 6. Receptkaarten grid ----- */
+.resultaten-grid {
+  display: grid;
+  /* Responsief: kolommen van minimaal 260 px, zoveel als passen */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+ 
+/* ----- 7. Receptkaart ----- */
+.recept-kaart {
+  background: var(--kleur-oppervlak);
+  border: 1px solid var(--kleur-rand);
+  border-radius: var(--radius);
+  box-shadow: var(--schaduw);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+ 
+.recept-kaart:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+ 
+/* Thumbnail bovenaan de kaart */
+.kaart-thumbnail {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+ 
+/* Tekstdeel onderaan de kaart */
+.kaart-body {
+  padding: 1rem 1rem 0.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+ 
+.kaart-naam {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: bold;
+  line-height: 1.3;
+  color: var(--kleur-tekst);
+}
+ 
+.kaart-meta {
+  font-size: 0.82rem;
+  color: var(--kleur-subtekst);
+}
+ 
+/* Knoppen-rij onderaan kaart */
+.kaart-acties {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem 0.85rem;
+  border-top: 1px solid var(--kleur-rand);
+  margin-top: auto;
+}
+ 
+.details-knop {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  background: var(--kleur-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+ 
+.details-knop:hover {
+  background-color: var(--kleur-accent-hover);
+}
+ 
+/* ----- 8. Hartje (favoriet) ----- */
+.favoriet-knop {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--kleur-rand);       /* standaard: leeg/grijs hartje */
+  transition: color 0.2s, transform 0.15s;
+  padding: 0.2rem 0.3rem;
+}
+ 
+.favoriet-knop:hover {
+  transform: scale(1.2);
+  color: var(--kleur-favoriet);
+}
+ 
+/* Klasse toegevoegd door JS wanneer recept favoriet is */
+.favoriet-knop.actief {
+  color: var(--kleur-favoriet);
+}
+ 
+/* ----- 9. Modal overlay & kaart ----- */
+.modal-overlay {
+  /* Bedekt het gehele scherm */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  /* Zachte verschijning */
+  animation: fadeIn 0.2s ease;
+}
+ 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+ 
+.modal-kaart {
+  position: relative;
+  background: var(--kleur-oppervlak);
+  border-radius: var(--radius);
+  max-width: 700px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.22s ease;
+}
+ 
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+ 
+/* Sluitknop rechts boven in de modal */
+.modal-sluit {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--kleur-subtekst);
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  transition: color 0.15s;
+}
+ 
+.modal-sluit:hover {
+  color: var(--kleur-tekst);
+}
+ 
+/* ----- 10. Modal inhoud ----- */
+.modal-inhoud {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+ 
+.laden-tekst {
+  color: var(--kleur-subtekst);
+  font-style: italic;
+}
+ 
+/* Grote foto bovenaan de modal */
+.modal-afbeelding {
+  width: 100%;
+  border-radius: 7px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+ 
+/* Naam van het recept */
+.modal-naam {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: bold;
+  line-height: 1.25;
+}
+ 
+/* Categorie + regio als kleine badges */
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+ 
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--kleur-achtergrond);
+  border: 1px solid var(--kleur-rand);
+  color: var(--kleur-subtekst);
+}
+ 
+/* Sectie-opschriften binnen de modal */
+.modal-sectie-titel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--kleur-accent);
+  margin-bottom: 0.5rem;
+}
+ 
+/* Ingrediëntenlijst als twee kolommen */
+.ingredienten-lijst {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.3rem 1rem;
+}
+ 
+.ingredienten-lijst li {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.4rem;
+}
+ 
+.ingredient-maat {
+  color: var(--kleur-subtekst);
+  min-width: 4rem;
+  text-align: right;
+}
+ 
+/* Instructies als doorlopende tekst */
+.instructies-tekst {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--kleur-tekst);
+  white-space: pre-line;   /* behoudt alinea-afbrekingen uit de API-data */
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.4rem;
+}
+ 
+/* Scrollbar styling voor de instructies (webkit) */
+.instructies-tekst::-webkit-scrollbar {
+  width: 5px;
+}
+.instructies-tekst::-webkit-scrollbar-track {
+  background: var(--kleur-achtergrond);
+}
+.instructies-tekst::-webkit-scrollbar-thumb {
+  background: var(--kleur-rand);
+  border-radius: 999px;
+}
+ 
+/* ----- 11. Responsive ----- */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+ 
+  .search-bar {
+    flex-direction: column;
+  }
+ 
+  .zoek-knop {
+    width: 100%;
+  }
+ 
+  /* Eén kolom op kleine schermen */
+  .resultaten-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .modal-kaart {
+    padding: 1.25rem;
+  }
+ 
+  .modal-naam {
+    font-size: 1.25rem;
+  }
+ 
+  .ingredienten-lijst {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+@media (max-width: 400px) {
+  .main-content {
+    padding: 1.25rem 1rem 3rem;
+  }
+}
